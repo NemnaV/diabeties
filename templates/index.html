@@ -52,7 +52,8 @@
     <br>Этот сайт не получал рекомендаций от врачей, относитесь к нему как к развлекательному сайту.
   </p>
 {% endif %}
-    <form action="/form" method="POST" id="pole">
+    <form action="/form" method="POST" id="pole" data-netlify="true" data-netlify-honeypot="bot-field" 
+    data-netlify-recaptcha="true">
     <br>
     <div class="input-group">
         <label for="method">Выберите метод классификации для прогнозирования:</label>
