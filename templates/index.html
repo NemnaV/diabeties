@@ -1,0 +1,101 @@
+
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+<html lang="en">
+<style>
+    h1 {text-align: center;}
+    p {text-align: center;}
+    div {text-align: center;}
+</style>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+</head>
+<body>
+    <header>Прототип автоматизированного сервиса диагностики сахарного диабета 2 типа для женщин</header>
+    <div class="tab">
+         <table align="center">
+             <caption>Точности методов классификации</caption>
+             <tr>
+                <th>Название метода</th>
+                <th>Точность</th>
+            </tr>
+            <tr>
+                <td>Логистическая регрессия</td>
+                <td>76%</td>
+            </tr>
+            <tr>
+                <td>Гауссовский наивный байессовский класификатор</td>
+                <td>72%</td>
+            </tr>
+            <tr>
+                <td>Случайный лес</td>
+                <td>72%</td>
+            </tr>
+    </table>
+    </div>
+    <h1 id="text">Заполните поля ниже, чтобы узнать предварительный результат</h1>
+    {% if result==0 %}
+  <p class="negative-answer">
+    <b>С точностью {{ ac }}% у Вас нет диабета 2 типа.</b>
+    <br>
+    <br> Этот сайт не получал рекомендаций от врачей, относитесь к нему как к развлекательному сайту. 
+    <br>Для медицинской консультации обратитесь к врачу.
+  </p>
+{% elif result==1 %}
+  <p class="positive-answer">
+    <b>С точностью {{ ac }}% у Вас есть диабет 2 типа.</b>
+    <br>
+    <br>Пожалуйста, проконсультируйтесь с врачом в ближайшее время! 
+    <br>Этот сайт не получал рекомендаций от врачей, относитесь к нему как к развлекательному сайту.
+  </p>
+{% endif %}
+    <form action="/form" method="POST" id="pole">
+    <br>
+    <div class="input-group">
+        <label for="method">Выберите метод классификации для прогнозирования:</label>
+        <select name="method" id="methods" class="selectpicker form-control">
+            <option value="lr">Логистическая регрессия</option>
+            <option value="nb">Гауссовский наивный байессовский класификатор</option>
+            <option value="rf">Случайный лес</option>
+        </select>
+        <br><br>
+            <label for="par1">Укажите, сколько раз вы были беременны:</label>
+            <input type="number" name="Pregnancies" placeholder="2" min="0" max="20">
+        <br><br>
+            <label for="par2">Укажите уровень глюкозы в мг/дл:</label>
+            <input type="number" name="Glucose" value="" placeholder="110" min="10" max="800">
+        <br><br>
+            <label for="par3">Укажите кровяное давление в мм рт. ст.:</label>
+            <input type="number" name="BloodPressure" placeholder="90" min="10" max="800">
+        <br><br>
+            <label for="par4">Укажите толщину кожи в мм или напишите 0, 
+                если не знаете значение этого параметра:</label>
+            <input type="number" name="SkinThickness" placeholder="30" min="0" max="500">
+        <br><br>
+            <label for="par5">Укажите значение инсулина в мкЕд/мл или напишите 0, 
+                если не знаете значение этого параметра:</label>
+            <input type="number" name="Insulin" placeholder="80" min="0" max="3300">
+        <br><br>
+            <label for="par6">Укажите рост в см:</label>
+            <input type="number" name="Height" placeholder="170" min="50" max="250">
+        <br><br>
+            <label for="par7">Укажите вес в кг:</label>
+            <input type="number" name="Weight" placeholder="65" min="20" max="350">
+        <br><br>
+            <label for="par8">Укажите значение родословной функции диабета или напишите 0, 
+                если не знаете значение этого параметра:</label>
+            <input type="number" name="DiabetesPedigreeFunction" placeholder="0.427" min="0" max="3">
+        <br><br>
+            <label for="par9">Укажите возраст:</label>
+            <input type="number" name="Age" placeholder="35" min="21" max="81">
+    </div>
+    <div>
+        <button class="button button1" id='but' type="submit" name="submit_button" value="get_results" >Получить результат</button>
+    </div>
+    </form>
+    <br>
+</body>
+</html>
